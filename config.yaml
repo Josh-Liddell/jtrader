@@ -1,0 +1,25 @@
+
+general:
+  - flags: [-h, --help]
+    action: help
+    help: "• Show this help message and exit"
+
+  - flags: [-v, --version]
+    action: version
+    version: JTrader v1.0
+    help: "• Show program version number and exit"
+
+commands:
+  start:
+    help: "• Start a trading process"
+    func: start
+    args:
+      - flags: [-c, --capital]
+        help: • Select starting capital amount (USD)
+
+      - flags: [-cf, --config]
+        help: • IDK
+  stop:
+    help: "• Stops the trading process"
+    func: stop
+    args: []
