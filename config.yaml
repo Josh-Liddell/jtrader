@@ -1,4 +1,3 @@
-
 general:
   - flags: [-h, --help]
     action: help
@@ -15,10 +14,13 @@ commands:
     func: start
     args:
       - flags: [-c, --capital]
+        # type: float
+        default: 1000.00
         help: • Select starting capital amount (USD)
 
-      - flags: [-cf, --config]
-        help: • IDK
+      - flags: [-f, --frequency]
+        default: 6
+        help: • Number of times/minute to check for arbitrage
   stop:
     help: "• Stops the trading process"
     func: stop

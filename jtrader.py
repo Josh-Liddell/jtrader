@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 import argparse as ap
 import yaml
-# from customparser import CustomArgParser
-# from tradestrategies import MeanReversion
+import time
 
 
-class JTrader():
+class JTrader:
 
     # Create the argument parser
     def __init__(self, config):
@@ -16,10 +15,13 @@ class JTrader():
             add_help=False,
             allow_abbrev=False)
 
-        self._config_parsers(config)
+        self._setup_parser(config)
+        self.trading = False
+        # self.trading_capital = 100
+        # self.frequency =
 
     # Applying configuration to the parser object
-    def _config_parsers(self, config):
+    def _setup_parser(self, config):
         # Apply general argument options
         for args in config['general']:
             flags = args.pop('flags')
@@ -48,11 +50,21 @@ class JTrader():
             self.parser.print_help()
 
     def start(self, args):
-        print("Program started!")
-        print(args.capital)
+        print(f"Program started with capital: {args.capital}")
+        self.trading = True
+        currencies = ["ETH/BTC", "BTC/USD"]
+
+        from trading import Trader
+        trader = Trader(args.capital, currencies)
+        trader.trade()
+
+        # while self.trading is True:
+        # trader.trade()
+        # time.sleep(60 / args.frequency)
 
     def stop(self, args):
         print("Program stopping")
+        self.trading = False
 
 
 # This code could get transfered to a main or init file later
@@ -62,4 +74,3 @@ if __name__ == '__main__':
 
     jtrader = JTrader(config)
     jtrader.run()
-
