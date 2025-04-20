@@ -17,8 +17,6 @@ class JTrader:
 
         self._setup_parser(config)
         self.trading = False
-        # self.trading_capital = 100
-        # self.frequency =
 
     # Applying configuration to the parser object
     def _setup_parser(self, config):
@@ -52,10 +50,9 @@ class JTrader:
     def start(self, args):
         print(f"Program started with capital: {args.capital}")
         self.trading = True
-        currencies = ["ETH/BTC", "BTC/USD"]
 
         from trading import Trader
-        trader = Trader(args.capital, currencies)
+        trader = Trader(args.capital)
         trader.trade()
 
         # while self.trading is True:
