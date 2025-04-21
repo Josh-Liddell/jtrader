@@ -2,7 +2,7 @@ from alpaca.data.historical import CryptoHistoricalDataClient
 from alpaca.trading.client import TradingClient
 from alpaca.data.requests import CryptoLatestQuoteRequest
 from alpaca.trading.requests import MarketOrderRequest
-from alpaca.trading.enums import OrderSide, TimeInForce
+from alpaca.trading.enums import OrderSide  # , TimeInForce
 import networkx as nx
 from itertools import permutations
 from dotenv import load_dotenv
@@ -19,7 +19,7 @@ class Trader:
 
         self.capital = tradingcapital
         # self.coins = ['AAVE', 'AVAX', 'BAT', 'BCH', 'BTC', 'CRV', 'DOGE', 'DOT', 'ETH', 'GRT', 'LINK', 'LTC', 'MKR', 'SHIB', 'SUSHI', 'UNI', 'XTZ', 'YFI']
-        self.coins = ['AAVE', 'AVAX', 'BAT', 'BCH', 'BTC', 'CRV']
+        self.coins = ['AAVE', 'AVAX', 'BAT', 'BTC', 'ETH']
         self.data_client = CryptoHistoricalDataClient(KEY, SECRET)
         self.trading_client = TradingClient(KEY, SECRET, paper=True)
         self.request_crypto = CryptoLatestQuoteRequest(symbol_or_symbols=[f"{coin}/USDC" for coin in self.coins])
@@ -29,11 +29,16 @@ class Trader:
 
         # Fetching the 'coin/USDC' data from alpaca
         quotes = self.data_client.get_crypto_latest_quote(self.request_crypto)
+        print(quotes['BTC/USDC'])
+        print(quotes['ETH/USDC'])
 
         # For each coin permutation pair making an edge whose weight I calculate from the USDC ask prices divided by eachother
         for c1, c2 in permutations(self.coins, 2):
-            ask1, ask2 = (quotes[f"{c}/USDC"].ask_price for c in (c1, c2))
-            g.add_edge(c1, c2, weight=ask1 / ask2)
+            bid = quotes[f"{c1}/USDC"].bid_price
+            ask = quotes[f"{c2}/USDC"].ask_price
+            rate = bid / ask
+            g.add_edge(c1, c2, weight=rate)
+            # Weight represents c1 -> USDC -> c2 exchange rate (how much c2 you get per c1 after when going through USDC)
 
         return g
 
