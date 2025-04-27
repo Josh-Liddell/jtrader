@@ -9,14 +9,13 @@ class JTrader:
     # Create the argument parser
     def __init__(self, config):
         self.parser = ap.ArgumentParser(
-            description='A tool for simulating crypto arbitrage opportunities.Use it to start a background watcher that checks for arbitrage paths',
+            description='A tool for detecting triangular arbitrage between crypatocurrency pairs trading through USDC',
             # usage='jtrader command [options]',
             epilog='Have fun trading!',
             add_help=False,
             allow_abbrev=False)
 
         self._setup_parser(config)
-        self.trading = False
 
     # Applying configuration to the parser object
     def _setup_parser(self, config):
@@ -26,6 +25,7 @@ class JTrader:
             self.parser.add_argument(*flags, **args)
 
         # Create subparsers and apply their argument options
+
         subparsers = self.parser.add_subparsers(dest='command', title='subcommands')
         commands = config["commands"]
 
@@ -41,19 +41,23 @@ class JTrader:
     def run(self):
         args = self.parser.parse_args()
 
+        if args.snapshot or args.command:
+            from trading import Trader
+            self.trader = Trader(args.capital) if hasattr(args, 'capital') else Trader()
+
+        if args.snapshot:
+            print(f"Finding best path between {args.snapshot[0]} and {args.snapshot[1]}...")
+            self.trader.snapshot(args.snapshot)
+
         # If a subcommand was entered run its assocated function
-        if args.command:
+        elif args.command:
             args.func(args)
         else:
             self.parser.print_help()
 
     def start(self, args):
         print(f"Program started with capital: {args.capital}")
-        self.trading = True
-
-        from trading import Trader
-        trader = Trader(args.capital)
-        trader.trade()
+        self.trader.trade()
 
         # while self.trading is True:
         # trader.trade()
@@ -61,7 +65,6 @@ class JTrader:
 
     def stop(self, args):
         print("Program stopping")
-        self.trading = False
 
 
 # This code could get transfered to a main or init file later

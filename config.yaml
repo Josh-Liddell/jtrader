@@ -7,6 +7,12 @@ general:
     action: version
     version: JTrader v1.0
     help: "• Show program version number and exit"
+  
+  - flags: [-s, --snapshot]
+    metavar: "Coin"
+    nargs: 2
+    help: "• Specify two currencies to find most profitable path between"
+
 
 commands:
   start:
@@ -14,8 +20,7 @@ commands:
     func: start
     args:
       - flags: [-c, --capital]
-        # type: float
-        default: 1000.00
+        default: 1000
         help: • Select starting capital amount (USD)
 
       - flags: [-f, --frequency]
