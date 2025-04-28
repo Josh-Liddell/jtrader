@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jtrader"
+version = "0.1.0"
+description = "A CLI tool for simulating triangular arbitrage."
+authors = [{ name = "Joshua Liddell", email = "josh.liddell668@gmail.com" }]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "alpaca-py",
+    "networkx",
+    "python-dotenv",
+    "tqdm",
+    "pyyaml"
+]
+
+
+[project.scripts]
+jtrader = "jtrader.cli:main"

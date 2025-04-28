@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 import argparse as ap
-import yaml
-import time
 
 
 class JTrader:
@@ -62,12 +60,3 @@ class JTrader:
     def stop(self, args):
         print('Program stopping')
         # (unfinished)
-
-
-# This code could get transfered to a main or init file later
-if __name__ == '__main__':
-    with open('config.yaml', 'r') as file:
-        config = yaml.safe_load(file)
-
-    jtrader = JTrader(config)
-    jtrader.run()

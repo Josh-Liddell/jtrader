@@ -4,6 +4,7 @@ from alpaca.data.requests import CryptoLatestQuoteRequest
 from alpaca.trading.requests import MarketOrderRequest
 import networkx as nx
 from itertools import permutations
+from pathlib import Path
 from dotenv import load_dotenv
 import os
 from tqdm import tqdm
@@ -14,7 +15,9 @@ import time
 class Trader:
 
     def __init__(self, tradingcapital=1000):
-        load_dotenv()
+        dotenv_path = Path.home() / ".jtrader.env"
+        if dotenv_path.exists():
+            load_dotenv(dotenv_path)
         KEY = os.getenv("ALPACA_API_KEY")
         SECRET = os.getenv("ALPACA_SECRET_KEY")
 
