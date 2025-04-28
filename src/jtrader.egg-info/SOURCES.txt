@@ -1,0 +1,13 @@
+README.md
+pyproject.toml
+src/jtrader/__init__.py
+src/jtrader/cli.py
+src/jtrader/config.yaml
+src/jtrader/jtrader.py
+src/jtrader/trading.py
+src/jtrader.egg-info/PKG-INFO
+src/jtrader.egg-info/SOURCES.txt
+src/jtrader.egg-info/dependency_links.txt
+src/jtrader.egg-info/entry_points.txt
+src/jtrader.egg-info/requires.txt
+src/jtrader.egg-info/top_level.txt
