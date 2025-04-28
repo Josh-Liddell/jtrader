@@ -57,14 +57,11 @@ class JTrader:
 
     def start(self, args):
         print(f"Program started with capital: {args.capital}")
-        self.trader.trade()
-
-        # while self.trading is True:
-        # trader.trade()
-        # time.sleep(60 / args.frequency)
+        self.trader.trade(int(args.frequency))
 
     def stop(self, args):
-        print("Program stopping")
+        print('Program stopping')
+        # (unfinished)
 
 
 # This code could get transfered to a main or init file later

@@ -24,7 +24,7 @@ commands:
         help: • Select starting capital amount (USD)
 
       - flags: [-f, --frequency]
-        default: 6
+        default: 1
         help: • Number of times/minute to check for arbitrage
   stop:
     help: "• Stops the trading process"
